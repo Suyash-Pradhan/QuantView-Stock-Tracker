@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import NavIteams from './NavIteams'
+import DropDown from './DropDown'
 
 function Header() {
   return (
@@ -13,6 +14,7 @@ function Header() {
       <nav className='hidden sm:block'>
         <NavIteams/>
       </nav>
+      <DropDown />
     </div>
 
    </header>
