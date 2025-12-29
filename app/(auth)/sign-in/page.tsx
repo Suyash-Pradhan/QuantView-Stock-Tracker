@@ -52,7 +52,10 @@ function SignInPage() {
           register={register}
           name="password"
           label="Password"
-          validation={{ required: 'Password is required', minLength: 6 }}
+          validation={{
+            required: 'Password is required',
+            minLength: { value: 6, message: 'Password must be at least 6 characters long' }
+          }}
           error={errors.password}
         />
 
