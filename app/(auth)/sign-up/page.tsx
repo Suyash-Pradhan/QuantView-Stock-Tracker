@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import SelectField from '@/components/form/SelectField'
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import {CountrySelectField} from '@/components/form/CountrySelectField'
+import { CountrySelectField } from '@/components/form/CountrySelectField'
 import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from '@/lib/constants'
 
 function SignUpPage() {
@@ -62,6 +62,19 @@ function SignUpPage() {
           }}
           error={errors.email}
 
+        />
+
+        <InputField
+          placeholder='••••••••'
+          type='password'
+          register={register}
+          name='password'
+          label='Password'
+          validation={{
+            required: 'password is required',
+            minLength: { value: 6, message: 'Password must be at least 6 characters long' }
+          }}
+          error={errors.password}
         />
 
         <SelectField
