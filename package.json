@@ -23,6 +23,8 @@
     "country-flag-icons": "^1.6.4",
     "flag-icons": "^7.5.0",
     "lucide-react": "^0.555.0",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.0.2",
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
