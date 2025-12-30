@@ -33,4 +33,5 @@ export const connectToDatabase = async () => {
         throw e;
     }
     console.log(`MongoDB connected at: ${process.env.NEXT_PUBLIC_APP_URL}`);
+    return cached.conn;
 }
