@@ -4,7 +4,7 @@ import Link from 'next/link'
 import NavIteams from './NavIteams'
 import DropDown from './DropDown'
 
-function Header() {
+function Header({user}:{user:User}) {
   return (
    <header className='sticky top-0 header'>
     <div className="container header-wrapper">
@@ -14,7 +14,7 @@ function Header() {
       <nav className='hidden sm:block'>
         <NavIteams/>
       </nav>
-      <DropDown />
+      <DropDown user={user} />
     </div>
 
    </header>

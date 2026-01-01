@@ -13,13 +13,16 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LogOut } from "lucide-react";
 import NavIteams from "./NavIteams";
+import { sign } from "crypto";
+import { signOut } from "@/lib/action/auth.action";
 
-function DropDown() {
+function DropDown({ user }: { user: User }) {
     const router = useRouter();
-    const handleSignout = () => {
-        router.push('/signout');
+    const handleSignout = async () => {
+        await signOut();
+        router.push('/sign-in');
     }
-    const user = { name: 'John Doe', email: 'john@gmail.com ' }; // Replace with actual user data
+
     return (
         <div>
             <DropdownMenu>
