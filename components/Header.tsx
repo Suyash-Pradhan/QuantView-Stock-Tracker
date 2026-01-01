@@ -4,6 +4,12 @@ import Link from 'next/link'
 import NavIteams from './NavIteams'
 import DropDown from './DropDown'
 
+/**
+ * Renders the app header containing the logo, primary navigation, and user dropdown.
+ *
+ * @param user - The authenticated user object to display in the dropdown.
+ * @returns The header React element.
+ */
 function Header({user}:{user:User}) {
   return (
    <header className='sticky top-0 header'>

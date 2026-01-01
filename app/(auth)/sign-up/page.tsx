@@ -13,6 +13,13 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 
+/**
+ * Renders the sign-up page with a personalized form and manages the user registration flow.
+ *
+ * Submits collected form data to the registration service; on successful registration navigates to the root route and on failure displays a user-facing error toast.
+ *
+ * @returns The rendered sign-up page as a JSX element.
+ */
 function SignUpPage() {
   const router = useRouter();
   const {

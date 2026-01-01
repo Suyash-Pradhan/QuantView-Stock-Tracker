@@ -1,10 +1,19 @@
-
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { auth } from '@/lib/better-auth/auth';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+/**
+ * Authentication page layout that redirects authenticated users to the site root.
+ *
+ * If a session with a user is present, performs a redirect to '/'. Otherwise renders
+ * the authentication layout: left column with logo and provided `children`, and right
+ * column with testimonial and dashboard preview.
+ *
+ * @param children - Content rendered inside the left column of the auth layout
+ * @returns A JSX element representing the authentication layout
+ */
 async function layout({ children }: { children: React.ReactNode }) {
   const session = await auth.api.getSession({headers: await headers()});
   if(session?.user){

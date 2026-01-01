@@ -8,6 +8,14 @@ import { signInWithEmail } from '@/lib/action/auth.action'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+/**
+ * Render the sign-in page containing an email and password form with validation and submission.
+ *
+ * The form validates inputs on blur, submits credentials via the authentication action,
+ * navigates to the home route on successful sign-in, and shows an error toast if submission fails.
+ *
+ * @returns A React element representing the sign-in page.
+ */
 function SignInPage() {
   const router = useRouter();
   const {

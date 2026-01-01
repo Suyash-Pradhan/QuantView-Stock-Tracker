@@ -18,6 +18,12 @@ export const metadata: Metadata = {
   description: "Track real-time stock prices and market data with QuantView.",
 };
 
+/**
+ * Root layout component that applies global font variables, enables dark mode, and provides a global Toaster.
+ *
+ * @param children - The page content to render inside the root <body>.
+ * @returns The top-level HTML structure (<html> with <body>) containing `children` and a global `<Toaster />`.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
