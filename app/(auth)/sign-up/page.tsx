@@ -7,8 +7,14 @@ import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { CountrySelectField } from '@/components/form/CountrySelectField'
 import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from '@/lib/constants'
+import { sendWelcomeEmail } from '@/lib/nodemailer/index'
+import { signUpWithEmail } from '@/lib/action/auth.action'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+
 
 function SignUpPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,9 +35,15 @@ function SignUpPage() {
   })
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      console.log('Form Data Submitted:', data)
+      const result = await signUpWithEmail(data);
+      if (result?.success) {
+        router.push('/');
+      }
     } catch (error) {
-      console.error('Error submitting form:', error)
+      console.error('Error submitting form:', error);
+      toast.error('Sign up failed. Please try again.', {
+        description: error instanceof Error ? error.message : 'Failed to create an account.'
+      });
     }
   }
   return (

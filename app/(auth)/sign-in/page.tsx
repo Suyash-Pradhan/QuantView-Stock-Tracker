@@ -4,8 +4,12 @@ import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import InputField from '@/components/form/InputField'
 import { Button } from '@/components/ui/button'
+import { signInWithEmail } from '@/lib/action/auth.action'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 function SignInPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,10 +24,15 @@ function SignInPage() {
 
   const onSubmit = async (data: SignInFormData) => {
     try {
-      console.log('Sign in data:', data)
-      // TODO: integrate with auth API
+      const result = await signInWithEmail(data);
+      if (result?.success) {
+        router.push('/');
+      }
     } catch (error) {
-      console.error('Error during sign in:', error)
+      console.error('Error submitting form:', error);
+      toast.error('Sign in failed. Please try again.', {
+        description: error instanceof Error ? error.message : 'Failed to Sign in.'
+      });
     }
   }
 
