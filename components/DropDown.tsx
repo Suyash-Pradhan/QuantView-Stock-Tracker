@@ -16,6 +16,14 @@ import NavIteams from "./NavIteams";
 import { sign } from "crypto";
 import { signOut } from "@/lib/action/auth.action";
 
+/**
+ * Renders a user account dropdown menu showing the user's avatar, name, and email, and exposing account actions.
+ *
+ * The menu includes a "Logout" item that signs the user out and navigates to the sign-in page.
+ *
+ * @param user - The current user whose name and email are displayed in the menu.
+ * @returns The dropdown menu React element for the user's account actions.
+ */
 function DropDown({ user }: { user: User }) {
     const router = useRouter();
     const handleSignout = async () => {

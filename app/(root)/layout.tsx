@@ -5,6 +5,14 @@ import { headers } from 'next/headers'
 import React from 'react'
 import { redirect } from 'next/navigation'
 
+/**
+ * Application layout that ensures an authenticated session, renders the Header with the current user, and wraps page content.
+ *
+ * Redirects to '/sign-in' when there is no authenticated user in the session.
+ *
+ * @param children - Page content to render inside the layout
+ * @returns The root JSX element containing the Header and the provided children
+ */
 async function layout({ children }: { children: React.ReactNode }) {
   const session = await auth.api.getSession({ headers: await headers() })
   if (!session?.user) {
