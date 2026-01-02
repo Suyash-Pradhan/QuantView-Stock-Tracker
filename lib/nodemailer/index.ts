@@ -14,7 +14,7 @@ export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData)
         to: email,
         subject: 'Welcome to Signalist - your stock market toolkit is ready!',
         text: "thanks for joining Signalist",
-        html: WELCOME_EMAIL_TEMPLATE.replace("{{name}}", name).replace("{{intro}}", intro)
+        html: WELCOME_EMAIL_TEMPLATE.replace("{{name}}", name).replace("{{intro}}", intro).replaceAll("{{appUrl}}", process.env.NEXT_PUBLIC_APP_URL || "")
     }
     return transporter.sendMail(mailoption);
 }

@@ -39,3 +39,11 @@ export const sendSignUpEmail = inngest.createFunction(
             message: 'Welcome email sent successfully'
         }
     })
+
+export const sendDailySummaryEmail = inngest.createFunction(
+    { id: "daily-summary-email" },
+    [{ event: 'app/user.daily-news' }, { cron: '0 12 * * *' }],
+    async ({ step }) => {
+        
+     }
+)
