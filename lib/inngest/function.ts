@@ -2,6 +2,8 @@ import { text } from "stream/consumers";
 import { inngest } from "./client";
 import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "./prompt";
 import { sendWelcomeEmail } from "../nodemailer";
+import { getAllUsersForNewsEmail } from "../action/user.action";
+import { success } from "better-auth";
 export const sendSignUpEmail = inngest.createFunction(
     { id: "sing-up-email" },
     { event: "app/user.created" },
@@ -44,6 +46,9 @@ export const sendDailySummaryEmail = inngest.createFunction(
     { id: "daily-summary-email" },
     [{ event: 'app/user.daily-news' }, { cron: '0 12 * * *' }],
     async ({ step }) => {
-        
-     }
+        const user = await step.run('get-user', getAllUsersForNewsEmail)
+        if (!user) {
+            return { success: false, message: 'No users found' }
+        }
+    }
 )
