@@ -56,45 +56,56 @@ export const sendDailySummaryEmail = inngest.createFunction(
         }
 
         const result = await step.run('get-user-news', async () => {
-            const perUser: Array<{ user: User, artical: MarketNewsArticle[] }> = []
+            const perUser: Array<{ user: User, articles: MarketNewsArticle[] }> = []
 
             for (const user of users) {
-                const symbols = await getWatchlistSymbolsByEmail(user.email)
-                let artical = await getNews(symbols);
+                try {
+                    const symbols = await getWatchlistSymbolsByEmail(user.email)
+                    let articles = await getNews(symbols);
 
-                artical = artical.slice(0, 6);
-                if (artical.length === 0) {
-                    artical = await getNews();
-                    artical = artical.slice(0, 6);
+                    articles = articles.slice(0, 6);
+                    if (articles.length === 0) {
+                        articles = await getNews();
+                        articles = articles.slice(0, 6);
+                    }
+                    perUser.push({ user, articles });
+                } catch (error) {
+                    console.error('daily-news: error preparing user news', user.email, error);
+                    perUser.push({ user, articles: [] });
                 }
-                perUser.push({ user, artical });
             }
             return perUser;
         })
 
-        const userSummary: Array<{ user: User, NewsContent: string }> = [];
-        for (const { user, artical } of result) {
-            const prompt = NEWS_SUMMARY_EMAIL_PROMPT.replace("{{news_content}}", JSON.stringify(artical, null, 2));
+        const userNewsSummary: Array<{ user: User, newsContent: string }> = [];
+        for (const { user, articles } of result) {
+            try {
+                const prompt = NEWS_SUMMARY_EMAIL_PROMPT.replace("{{newsData}}", JSON.stringify(articles, null, 2));
 
-            const response = await step.ai.infer(`summarize-news-${user.email}`, {
-                model: step.ai.models.gemini({ model: "gemini-2.5-flash-lite" }),
-                body: {
-                    contents: [{ role: 'user', parts: [{ text: prompt }] }]
-                }
-            })
-            const part = response.candidates?.[0]?.content?.parts?.[0];
-            const summaryText = (part && 'text' in part ? part.text : null) || 'News not available at the moment.'
+                const response = await step.ai.infer(`summarize-news-${user.email}`, {
+                    model: step.ai.models.gemini({ model: "gemini-2.5-flash-lite" }),
+                    body: {
+                        contents: [{ role: 'user', parts: [{ text: prompt }] }]
+                    }
+                })
+                const part = response.candidates?.[0]?.content?.parts?.[0];
+                const summaryText = (part && 'text' in part ? part.text : null) || 'News not available at the moment.'
 
-            userSummary.push({ user, NewsContent: summaryText });
+                userNewsSummary.push({ user, newsContent: summaryText });
+            } catch (error) {
+                console.error('Failed to summarize news for:', user.email, error);
+                userNewsSummary.push({ user, newsContent: '' });
+            }
+            }
         }
         await step.run('send-news-email', async () => {
-            for (const { user, NewsContent } of userSummary) {
-                if (!NewsContent) {
+            for (const { user, newsContent } of userNewsSummary) {
+                if (!newsContent) {
                     continue;
                 }
-                await sendNewsSummaryEmail({ email: user.email, date: getFormattedTodayDate(), articles: NewsContent });
+                await sendNewsSummaryEmail({ email: user.email, date: getFormattedTodayDate(), articles: newsContent });
             }
-            return {success: true, msg:'Daily summary emails sent successfully'}
+            return { success: true, msg: 'Daily summary emails sent successfully' }
         })
     }
 )
