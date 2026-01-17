@@ -13,17 +13,16 @@ export async function getWatchlistSymbolsByEmail(email: string): Promise<string[
         if (!db) {
             throw new Error('Mongoose connection not found');
         }
-        const userid = await db.collection('user')
-            .findOne<{ _id?: unknown, id?: string, email: string }>({ email })
+        const user = await db.collection('user').findOne<{ _id: any; email: string }>({ email });
 
-        if (!userid) {
-            return [];
-        }
+        if (!user) return [];
 
-        const iteams = await WatchListModel.find({ userid }, { symbol: 1 }).lean();
+        const items = await WatchListModel.find(
+            { userId: user._id },
+            { symbol: 1 }
+        ).lean();
 
-        return iteams.map((i) => String(i.symbol));
-
+        return items.map(item => String(item.symbol));
     }
     catch (e) {
         console.error('Error fetching watchlist symbols by email:', e);
