@@ -17,4 +17,4 @@ const WatchListSchema = new Schema<IWatchListIteam>(
 )
 
 export const WatchListModel: Model<IWatchListIteam> =
-    (models?.IWatchListIteam as Model<IWatchListIteam>) || model<IWatchListIteam>('Watchlist', WatchListSchema);
+    (models?.Watchlist as Model<IWatchListIteam>) || model<IWatchListIteam>('Watchlist', WatchListSchema);

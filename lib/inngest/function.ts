@@ -90,11 +90,11 @@ export const sendDailySummaryEmail = inngest.createFunction(
         await step.run('send-news-email', async () => {
             for (const { user, NewsContent } of userSummary) {
                 if (!NewsContent) {
-                    return false;
+                    continue;
                 }
-                return await sendNewsSummaryEmail({ email: user.email, date: getFormattedTodayDate(), articles: NewsContent });
+                await sendNewsSummaryEmail({ email: user.email, date: getFormattedTodayDate(), articles: NewsContent });
             }
-            return {success: true,msg:'Daily summary emails sent successfully'}
+            return {success: true, msg:'Daily summary emails sent successfully'}
         })
     }
 )
