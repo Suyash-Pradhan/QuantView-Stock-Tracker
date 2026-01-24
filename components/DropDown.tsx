@@ -16,7 +16,7 @@ import NavIteams from "./NavIteams";
 import { sign } from "crypto";
 import { signOut } from "@/lib/action/auth.action";
 
-async function DropDown({ user,initialStocks }: { user: User,initialStocks: StockWithWatchlistStatus[] }) {
+function DropDown({ user, initialStocks }: { user: User; initialStocks: StockWithWatchlistStatus[] }) {
     const router = useRouter();
     const handleSignout = async () => {
         await signOut();
