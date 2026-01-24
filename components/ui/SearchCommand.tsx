@@ -76,19 +76,19 @@ export function CommandManyItems({ initialStocks, renderAs, label }: SearchProps
     setSearchValue('');
     setOpen(false);
   }
-  console.log('debouncevalue', debouncevalue);
+  
   useEffect(() => {
     const fetchStocks = async () => {
 
       if (!debouncevalue) {
-        console.log('Reset to initial stocks');
+      
         setStock(initialStocks);
         return;
       }
       setLoading(true);
       try {
         const res = await searchStocks(normalize(debouncevalue));
-        console.log('Fetched stocks:', res);
+       
         setStock(res);
       } catch {
         setStock([]);
@@ -99,12 +99,7 @@ export function CommandManyItems({ initialStocks, renderAs, label }: SearchProps
     }
     fetchStocks();
   }, [debouncevalue])
-console.log('displayStock', displayStock);
-console.log('searchValue', stock);
-console.log('searchMode', SearchMode);
-if (displayStock.length === 0) {
-    console.log('Too many items to display');
-}
+
   return (
     <div className="flex flex-col gap-4">
       {renderAs === 'text' ? (

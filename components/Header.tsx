@@ -7,7 +7,7 @@ import { searchStocks } from '@/lib/action/finnhub.actions'
 
 async function Header({ user }: { user: User }) {
   const initialStocks = await searchStocks();
-{  console.log('Header initialStocks', initialStocks);}
+
   return (
     <header className='sticky top-0 header'>
       <div className="container header-wrapper">
@@ -18,7 +18,7 @@ async function Header({ user }: { user: User }) {
           <NavIteams
             initialStocks={initialStocks} />
         </nav>
-        <DropDown user={user} />
+        <DropDown user={user} initialStocks={initialStocks} />
       </div>
 
     </header>

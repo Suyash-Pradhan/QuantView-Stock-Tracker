@@ -42,7 +42,6 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
                         const articles = await fetchJSON<RawNewsArticle[]>(url, 300);
                         perSymbolArticles[sym] = (articles || []).filter(validateArticle);
                     } catch (e) {
-                        console.error('Error fetching company news for', sym, e);
                         perSymbolArticles[sym] = [];
                     }
                 })
@@ -94,7 +93,6 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
     }
 }
 export const searchStocks = cache(async (query?: string): Promise<StockWithWatchlistStatus[]> => {
-    console.log('Searching stocks for query:', query);
     try {
         const token = process.env.FINNHUB_API_KEY ?? process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
         if (!token) {
@@ -116,7 +114,6 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
             const profiles = await Promise.all(
                 top.map(async (sym) => {
                     try {
-                        console.log('Fetching profile for', sym);
                         const url = `${process.env.FINNHUB_BASE_URL || process.env.NEXT_PUBLIC_FINNHUB_BASE_URL}/stock/profile2?symbol=${encodeURIComponent(sym)}&token=${token}`;
                         // Revalidate every hour
                         const profile = await fetchJSON<any>(url, 3600);

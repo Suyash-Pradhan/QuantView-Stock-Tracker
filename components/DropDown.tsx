@@ -16,7 +16,7 @@ import NavIteams from "./NavIteams";
 import { sign } from "crypto";
 import { signOut } from "@/lib/action/auth.action";
 
-function DropDown({ user }: { user: User }) {
+async function DropDown({ user,initialStocks }: { user: User,initialStocks: StockWithWatchlistStatus[] }) {
     const router = useRouter();
     const handleSignout = async () => {
         await signOut();
@@ -66,7 +66,9 @@ function DropDown({ user }: { user: User }) {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator className="hidden sm:block bg-gray-600" />
                     <nav className="sm:hidden">
-                        <NavIteams />
+                        <NavIteams 
+                            initialStocks={initialStocks}
+                        />
                     </nav>
 
                 </DropdownMenuContent>
