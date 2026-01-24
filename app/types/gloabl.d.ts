@@ -171,6 +171,11 @@ declare global {
         buttonVariant?: 'primary' | 'secondary';
         className?: string;
     };
+    type SearchProps = {
+        renderAs?: 'button' | 'text';
+        label?: string;
+        initialStocks: StockWithWatchlistStatus[];
+    };
 
     type AlertData = {
         symbol: string;
