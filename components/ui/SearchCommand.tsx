@@ -124,7 +124,7 @@ export function CommandManyItems({ initialStocks, renderAs, label }: SearchProps
                   </CommandEmpty>
                 ) : displayStock?.length === 0 ? (
                   <CommandEmpty className="search-list-empty">{
-                    SearchMode ? 'No Result Found' : 'No Stock avilable'
+                    SearchMode ? 'No results found' : 'No stocks available'
                   }</CommandEmpty>
                 ) : (
                   <CommandGroup heading={SearchMode ? 'Search results' : 'Popular stocks'}>
