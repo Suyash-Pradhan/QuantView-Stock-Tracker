@@ -129,9 +129,10 @@ export function CommandManyItems({ initialStocks, renderAs, label }: SearchProps
                 ) : (
                   <CommandGroup heading={SearchMode ? 'Search results' : 'Popular stocks'}>
                     {displayStock.map((stockItem) => (
-                      <CommandItem key={stockItem.symbol} onClick={handleSelectStock}>
+                      <CommandItem key={stockItem.symbol} >
                         <Link
                           href={`/stocks/${stockItem.symbol}`}
+                          onClick={handleSelectStock}
                           className="flex items-center gap-2 w-full"
                         >
                           <TrendingUp className="h-4 w-4" />
