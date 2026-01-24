@@ -96,7 +96,6 @@ export const sendDailySummaryEmail = inngest.createFunction(
                 console.error('Failed to summarize news for:', user.email, error);
                 userNewsSummary.push({ user, newsContent: '' });
             }
-            }
         }
         await step.run('send-news-email', async () => {
             for (const { user, newsContent } of userNewsSummary) {
@@ -108,4 +107,5 @@ export const sendDailySummaryEmail = inngest.createFunction(
             return { success: true, msg: 'Daily summary emails sent successfully' }
         })
     }
+
 )
